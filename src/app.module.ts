@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
-import { BikeController } from './bike/controllers/bike.controller';
-import { BikeService } from './bike/services/bike.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BikeModule } from './bike/bike.module'
 
 @Module({
-  imports: [],
-  controllers: [BikeController],
-  providers: [AppService, BikeService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'bike-library.db',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    BikeModule,
+  ],
 })
 export class AppModule {}
