@@ -1,15 +1,33 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { BikeService } from '../services/bike.service';
+import { CreateBikeDto } from '../dto/create-bike.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('bike')
+@ApiTags('bikes')
+@Controller('bikes')
 export class BikeController {
+  constructor(private readonly bikeService: BikeService) {}
+  // Fetch all bikes from database
   @Get()
-  findAll(): string {
-    return 'This action returns all bikes';
+  findAll() {
+    return this.bikeService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param() params: any): string {
-    console.log(params.id);
-    return `This action returns a #${params.id} bike`;
+  // Create new bike to the database
+  @Post()
+  create(@Body() createBikeDto: CreateBikeDto) {
+    return this.bikeService.create(createBikeDto);
+  }
+
+  // Update bike by Id
+  @Put(':id')
+  update(@Param('id') id: string, @Body() createBikeDto: CreateBikeDto) {
+    return this.bikeService.update(id, createBikeDto);
+  }
+
+  // Delete bike by Id
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.bikeService.remove(id);
   }
 }
