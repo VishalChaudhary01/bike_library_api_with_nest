@@ -13,5 +13,8 @@ export class Bike {
      model: string;
 
      @Column()
+     year: number;
+
+     @Column()
      type: string;
 }

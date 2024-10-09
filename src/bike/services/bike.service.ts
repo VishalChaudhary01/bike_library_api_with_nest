@@ -17,7 +17,7 @@ export class BikeService {
 
      async create(createBikeDto: CreateBikeDto): Promise<Bike> {
           const bike = this.bikeRepository.create(createBikeDto);
-          return this.bikeRepository.save(bike);
+          return await this.bikeRepository.save(bike);
      }
 
      async update(id: string, createBikeDto: CreateBikeDto): Promise<Bike> {
